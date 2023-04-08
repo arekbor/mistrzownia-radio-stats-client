@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import Loader from "./components/loader/loader";
 import moment from "moment";
+import Error from "./components/error/error";
 
 const fetchStats = async (
   page: number,
@@ -40,7 +41,10 @@ function App() {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
 
-  const { isLoading, isError, error, data } = useQuery({
+  const { isLoading, isError, error, data } = useQuery<
+    ResponseStats,
+    AxiosError<string, any>
+  >({
     queryKey: ["stats", page, limit],
     queryFn: () => fetchStats(page, limit),
     keepPreviousData: true,
@@ -62,6 +66,10 @@ function App() {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (isError) {
+    return <Error error={error} />;
   }
 
   if (data?.data) {
