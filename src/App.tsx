@@ -140,6 +140,7 @@ function App() {
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={limit}
+          rowsPerPageOptions={[5, 10]}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Box>
